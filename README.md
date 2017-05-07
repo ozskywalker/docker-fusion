@@ -63,6 +63,7 @@ Sample Quickstart on fresh build:
 * Automate package build
 * Separate out UI from fusion node (+docker-compose)
 * Allow SOLR/other services logs to be visible from docker logs
+* Add volume to preserve SOLR info & config (or is this even necessary?)
 
 ## Version numbers
 
