@@ -64,6 +64,7 @@ Sample Quickstart on fresh build:
 * Separate out UI from fusion node (+docker-compose)
 * Allow SOLR/other services logs to be visible from docker logs
 * Add volume to preserve SOLR info & config (or is this even necessary?)
+* Create additional logic in runner script to support multi-node deployment using https://support.lucidworks.com/hc/en-us/articles/115000471827-Scaling-out-Fusion-to-Multi-Node-Cluster-w-Zookeeper-Ensemble
 
 ## Version numbers
 
