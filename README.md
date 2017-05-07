@@ -34,6 +34,14 @@ docker build -t docker-fusion .
 docker run -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -d docker-fusion
 ```
 
+### Usage -- watching logs
+
+```
+docker logs <container id/name>
+```
+
+Service startup & View logs will be visible here.
+
 ### Browser
 
 Once the image has loaded, fire up your web browser at:
@@ -54,6 +62,7 @@ Sample Quickstart on fresh build:
 * Reduce package dependencies to reduce build time
 * Automate package build
 * Separate out UI from fusion node (+docker-compose)
+* Allow SOLR/other services logs to be visible from docker logs
 
 ## Version numbers
 
