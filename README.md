@@ -4,8 +4,6 @@ Built to support a experimental project by loading Lucidworks Fusion and View in
 
 **If you do intend to run this on a exposed network / public cloud**, configure your host firewalls to restrict access to only the necessary ports (:3000 & :8764) and set secure passwords.
 
-**It is not recommended to run 3 node configuration on a machine with less than 16GB RAM and 8x CPUs**
-
 This project also lives in Docker hub as [failathon/docker-fusion](https://registry.hub.docker.com/u/failathon/docker-fusion/)
 
 ## Getting Started - 3x Node deployment
@@ -14,7 +12,7 @@ This project also lives in Docker hub as [failathon/docker-fusion](https://regis
 docker-compose up
 ```
 
-Worth noting that on resource starved systems, you may need to start node1 by itself (docker-compose up node1), let it settle, then start node2 & node3.
+**It is not recommended to run 3 node configuration on a machine with less than 16GB RAM and 8x CPUs.**  Also worth noting that on resource starved systems, you may need to start node1 by itself (docker-compose up node1), let it settle, then start node2 & node3.
 
 ## Getting Started - Single Node
 
