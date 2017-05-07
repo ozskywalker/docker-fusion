@@ -1,0 +1,49 @@
+version: '2'
+services:
+  node1:
+    image: "failathon/docker-fusion:latest"
+    ports:
+     - "3000:3000"
+     - "3001:3001"
+     - "3888"
+     - "8764:8764"
+     - "8765:8765"
+     - "8983:8983"
+     - "8984:8984"
+     - "9983:9983"
+    hostname: node1
+    container_name: node1
+    volumes:
+     - .:/shared
+    entrypoint: /opt/runner-masternode.sh
+
+  node2:
+    image: "failathon/docker-fusion:latest"
+    depends_on:
+      - node1
+    volumes_from:
+      - node1
+    hostname: node2
+    container_name: node2
+    environment:
+      - MYID=2
+      - ZK=node1
+    links:
+      - node1
+    entrypoint: /opt/runner-slavenode.sh
+
+  node3:
+    image: "failathon/docker-fusion:latest"
+    depends_on:
+      - node1
+    volumes_from:
+      - node1
+    hostname: node3
+    container_name: node3
+    environment:
+      - MYID=3
+      - ZK=node1
+    links:
+      - node1
+      - node2
+    entrypoint: /opt/runner-slavenode.sh
