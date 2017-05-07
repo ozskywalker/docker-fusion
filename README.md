@@ -64,9 +64,6 @@ Other ports:
 Sample Quickstart on fresh build:
 ![quickstart_screenshot](https://raw.githubusercontent.com/failathon/docker-fusion/master/quickstart.png)
 
-Sample cloud screenshot on fresh build:
-![cloud_screenshot](https://raw.githubusercontent.com/failathon/docker-fusion/master/cloud.png)
-
 ## Known Issues
 
 * SOLR fails to start on node2 or node3 - check Zookeeper has loaded successfully.
