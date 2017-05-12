@@ -14,6 +14,9 @@ then
 	bin/fusion stop ; bin/fusion start
 	tail -f /dev/null
 else
+	echo setting zkQuorum as 127.0.0.1
+	echo 127.0.0.1 zkQuorum >> /etc/hosts
+
 	# upload config
 	echo creating default.json with single server $HOSTNAME
 	read -d '' payload << EOF

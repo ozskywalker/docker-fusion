@@ -13,6 +13,9 @@ then
 	bin/fusion stop ; bin/fusion start
 	tail -f /dev/null
 else
+	echo setting zkQuorum as 127.0.0.1
+	echo 127.0.0.1 zkQuorum >> /etc/hosts
+
 	echo waiting for node1 Zookeeper to come online
 	/opt/wait-for-it.sh node1:2181 -- echo node1 zookeeper appears to be up, lets proceed
 
