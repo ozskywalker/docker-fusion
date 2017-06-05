@@ -1,5 +1,5 @@
 #!/bin/bash
-echo Running Fusion in Multi-Node
+echo runner-slavenode start
 echo This is a slave node
 
 HOSTNAME=`hostname`

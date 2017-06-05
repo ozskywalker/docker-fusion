@@ -1,5 +1,5 @@
 #!/bin/bash
-echo Running Fusion in Multi-Node
+echo runner-masternode start
 echo This is the first node
 
 HOSTNAME=`hostname`
@@ -30,21 +30,21 @@ else
   "concurrency" : 10,
   "validateCluster" : true}
 EOF
-	echo $payload > /tmp/default.json
+	echo $payload > /opt/zookeeper/default.json
 
 	echo starting first Zookeeper node
 	/usr/local/bin/zk-init.sh 1 &
 
 	echo zookeeper: creating /lucid/search-clusters
 	/opt/fusion/3.0.1/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -z localhost -cmd makepath /lucid/search-clusters
-	echo zookeeper: uploading /tmp/default.json to /lucid/search-clusters/default
-	/opt/fusion/3.0.1/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -z localhost -cmd putfile /lucid/search-clusters/default /tmp/default.json
-	rm /tmp/default.json
+	echo zookeeper: uploading /opt/zookeeper/default.json to /lucid/search-clusters/default
+	/opt/fusion/3.0.1/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -z localhost -cmd putfile /lucid/search-clusters/default /opt/zookeeper/default.json
+	rm /opt/zookeeper/default.json
 
 	echo Editing Fusion configuration file
 	sed 's/= 9983/= 2181/g' /opt/fusion/3.0.1/conf/fusion.properties > /tmp/fusion.properties
 	sed 's/group.default = zookeeper,/group.default = /g' /tmp/fusion.properties > /tmp/fusion.properties2
-	sed 's/zookeeper.start = true/zookeeper.start = false/g' /tmp/fusion.properties2 > /opt/fusion/3.0.1/conf/fusion.properties
+	sed 's/opt/zookeeper.start = true/opt/zookeeper.start = false/g' /tmp/fusion.properties2 > /opt/fusion/3.0.1/conf/fusion.properties
 	rm /tmp/fusion.properties /tmp/fusion.properties2
 
 	echo "default.address = $HOSTNAME" >> /opt/fusion/3.0.1/conf/fusion.properties

@@ -6,6 +6,8 @@ ENV ZOOKEEPERVER=release-3.5.1
 ENV LUCIDVIEW=https://github.com/lucidworks/lucidworks-view
 WORKDIR /opt
 
+VOLUME ["/zookeeperdata"]
+
 RUN mkdir -p /opt/app \
 	&& apt-get -y update \
 	&& apt-get -y install wget openjdk-8-jre openjdk-8-jdk ant git nodejs npm \
@@ -20,15 +22,13 @@ RUN npm install -g npm-install-retry \
 	&& cd /opt/app \
 	&& npm install \
 	&& bower --allow-root install
-RUN mkdir /tmp/zookeeper
-WORKDIR /tmp/zookeeper
+RUN mkdir /opt/zookeeper
+WORKDIR /opt/zookeeper
 RUN git clone https://github.com/apache/zookeeper.git . \
 	&& git checkout ${ZOOKEEPERVER} \
-	&& ant jar \
-	&& cp /tmp/zookeeper/conf/zoo_sample.cfg /tmp/zookeeper/conf/zoo.cfg \
-	&& echo "standaloneEnabled=false" >> /tmp/zookeeper/conf/zoo.cfg \
-	&& echo "dynamicConfigFile=/tmp/zookeeper/conf/zoo.cfg.dynamic" >> /tmp/zookeeper/conf/zoo.cfg
+	&& ant jar
 
+ADD zoo.cfg /opt/zookeeper/conf/zoo.cfg
 ADD FUSION_CONFIG.js /opt/app/FUSION_CONFIG.js
 
 ADD zk-init.sh /usr/local/bin
