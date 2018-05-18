@@ -1,7 +1,7 @@
 version: '2'
 services:
   node1:
-    image: "failathon/docker-fusion:latest"
+    image: "docker-fusion:latest"
     mem_limit: 4g
     ports:
      - "3000:3000"
@@ -19,7 +19,7 @@ services:
     entrypoint: /opt/runner-masternode.sh
 
   node2:
-    image: "failathon/docker-fusion:latest"
+    image: "docker-fusion:latest"
     mem_limit: 3g
     depends_on:
       - node1
@@ -35,7 +35,7 @@ services:
     entrypoint: /opt/runner-slavenode.sh
 
   node3:
-    image: "failathon/docker-fusion:latest"
+    image: "docker-fusion:latest"
     mem_limit: 3g
     depends_on:
       - node1
