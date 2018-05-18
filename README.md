@@ -26,7 +26,7 @@ docker-compose up
 
 ```
 docker pull failathon/docker-fusion
-docker run -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -d failathon/docker-fusion
+docker run -d --name docker-fusion -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -p 8763:8763 -p 8780:8780 -p 8771:8771 failathon/docker-fusion
 ```
 
 ### Usage -- Docker CLI / fresh build
@@ -34,10 +34,10 @@ docker run -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8
 (also saved in ./build.sh)
 
 ```
-git clone https://github.com/failathon/docker-fusion
+git clone https://github.com/ozskywalker/docker-fusion
 cd docker-fusion
-docker build -t docker-fusion .
-docker run -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -d docker-fusion
+/bin/bash build.sh
+docker run -d --name docker-fusion -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -p 8763:8763 -p 8780:8780 -p 8771:8771 docker-fusion:latest
 ```
 
 ### Usage -- watching logs
