@@ -1,8 +1,7 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 MAINTAINER Luke Walker "luke@blackduck.nu"
 
-ENV SOURCEHOST=172.25.201.108
-ENV FUSIONVER=4.0.1
+ENV FUSIONVER=4.0.2
 ENV ZOOKEEPERVER=release-3.5.4
 ENV LUCIDVIEW=https://github.com/lucidworks/lucidworks-view
 WORKDIR /opt
@@ -12,7 +11,7 @@ RUN mkdir -p /opt/app \
 	&& apt-get -y install wget openjdk-8-jre openjdk-8-jdk ant git nodejs npm \
 	&& apt-get clean \
 	&& ln -s /usr/bin/nodejs /usr/bin/node \
-	&& wget -ct 0 http://${SOURCEHOST}:8080/fusion-${FUSIONVER}.tar.gz -O /opt/fusion.tar.gz \
+	&& wget -ct 0 https://download.lucidworks.com/fusion-${FUSIONVER}/fusion-${FUSIONVER}.tar.gz -O /opt/fusion.tar.gz \
 	&& tar -xzf fusion.tar.gz \
 	&& rm fusion.tar.gz
 
