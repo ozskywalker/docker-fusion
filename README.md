@@ -1,4 +1,4 @@
-# Docker image for Lucidworks Fusion 3.0.1 (+ View)
+# Docker image for Lucidworks Fusion 4.0.2 (+ View)
 
 Built to support a experimental project by loading Lucidworks Fusion and View into a docker container, intended for both single node and 3x node DEV deployments.  This build has not been optimized, nor secured for production usage or exposure to regular internet.
 
@@ -87,5 +87,5 @@ Sample Quickstart on fresh build:
 * solr-spec 6.4.2
 * lucene-spec 6.4.2
 * OpenJDK 1.8.0
-* Fusion 3.0.1
+* Fusion 4.0.2
 * Zookeeper 3.5.3
