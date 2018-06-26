@@ -1,51 +1,48 @@
-version: '2'
+version: '3.1'
+
 services:
   node1:
     image: "docker-fusion:latest"
-    mem_limit: 4g
     ports:
+     - "8764:8764"
+     - "8983:8983"
      - "3000:3000"
      - "3001:3001"
      - "3888"
-     - "8764:8764"
      - "8765:8765"
-     - "8983:8983"
      - "8984:8984"
      - "9983:9983"
     hostname: node1
     container_name: node1
-    volumes:
-     - .:/shared
+    environment:
+     - NODES="3"
+     - ZOO_SERVERS="server.1=0.0.0.0:2888:3888 server.2=node2:2888:3888 server.3=node3:2888:3888"
     entrypoint: /opt/runner-masternode.sh
 
   node2:
     image: "docker-fusion:latest"
-    mem_limit: 3g
     depends_on:
-      - node1
-    volumes_from:
       - node1
     hostname: node2
     container_name: node2
     environment:
-      - MYID=2
-      - ZK=node1
+      - ZOO_ID="2"
+      - ZK="node1"
+      - ZOO_SERVERS="server.1=node1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=node3:2888:3888"
     links:
       - node1
     entrypoint: /opt/runner-slavenode.sh
 
   node3:
     image: "docker-fusion:latest"
-    mem_limit: 3g
     depends_on:
-      - node1
-    volumes_from:
       - node1
     hostname: node3
     container_name: node3
     environment:
-      - MYID=3
-      - ZK=node1
+      - ZOO_ID="3"
+      - ZK="node1"
+      - ZOO_SERVERS="server.1=node1:2888:3888 server.2=node2:2888:3888 server.3=0.0.0.0:2888:3888"
     links:
       - node1
       - node2

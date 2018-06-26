@@ -20,10 +20,12 @@ WORKDIR /tmp/zookeeper
 RUN git clone https://github.com/apache/zookeeper.git . \
 	&& git checkout ${ZOOKEEPERVER} \
 	&& ant jar \
-	&& cp /tmp/zookeeper/conf/zoo_sample.cfg /tmp/zookeeper/conf/zoo.cfg \
-	&& echo "standaloneEnabled=false" >> /tmp/zookeeper/conf/zoo.cfg \
-	&& echo "dynamicConfigFile=/tmp/zookeeper/conf/zoo.cfg.dynamic" >> /tmp/zookeeper/conf/zoo.cfg
+	&& cp /tmp/zookeeper/conf/zoo_sample.cfg /tmp/zookeeper/conf/zoo.cfg
 
+RUN echo "standaloneEnabled=false" >> /tmp/zookeeper/conf/zoo.cfg \
+	&& echo "dynamicConfigFile=/tmp/zookeeper/conf/zoo.cfg.dynamic" >> /tmp/zookeeper/conf/zoo.cfg \
+	&& echo "reconfigEnabled=true" >> /tmp/zookeeper/conf/zoo.cfg \
+	&& echo >> /tmp/zookeeper/conf/zoo.cfg
 
 ADD zk-init.sh /usr/local/bin
 RUN chmod 755 /usr/local/bin/zk-init.sh
@@ -31,8 +33,10 @@ RUN chmod 755 /usr/local/bin/zk-init.sh
 ADD runner-slavenode.sh /opt/runner-slavenode.sh
 ADD runner-masternode.sh /opt/runner-masternode.sh
 ADD wait-for-it.sh /opt/wait-for-it.sh
+ADD change-zookeeper-log4j.sh /opt/change-zookeeper-log4j.sh
 RUN chmod 755 /opt/*.sh
+RUN /opt/change-zookeeper-log4j.sh
 
-EXPOSE 2181/tcp 3000/tcp 3001/tcp 8764/tcp 8765/tcp 8983/tcp 8984/tcp 9983/tcp 8771/tcp 8763/tcp 8780/tcp
+EXPOSE 2181/tcp 2888/tcp 3888/tcp 3000/tcp 3001/tcp 8764/tcp 8765/tcp 8985/tcp 8983/tcp 8984/tcp 9983/tcp 8771/tcp 8763/tcp 8780/tcp
 
 ENTRYPOINT ["/opt/runner-masternode.sh"]

@@ -1,10 +1,12 @@
-# Docker image for Lucidworks Fusion 4.0.2 (+ View)
+# Docker image for Lucidworks Fusion 4.0.2
 
 Built to support a experimental project by loading Lucidworks Fusion and View into a docker container, intended for both single node and 3x node DEV deployments.  This build has not been optimized, nor secured for production usage or exposure to regular internet.
 
-**If you do intend to run this on a exposed network / public cloud**, configure your host firewalls to restrict access to only the necessary ports (:3000 & :8764) and set secure passwords.
+**If you do intend to run this on a exposed network / public cloud**, configure your host firewalls to restrict access to only the necessary ports and set secure passwords.
 
 This project also lives in Docker hub as [failathon/docker-fusion](https://registry.hub.docker.com/u/failathon/docker-fusion/)
+
+**NOTE: Multi-node not working at the moment.  Single-node does work**
 
 ## Getting Started - 3x Node deployment
 
@@ -12,7 +14,7 @@ This project also lives in Docker hub as [failathon/docker-fusion](https://regis
 docker-compose up
 ```
 
-**It is not recommended to run 3 node configuration on a machine with less than 16GB RAM and 8x CPUs.**  Also worth noting that on resource starved systems, you may need to start node1 by itself (docker-compose up node1), let it settle, then start node2 & node3.
+**It is not recommended to run 3 node configuration on a machine with less than 16GB RAM and 8x CPUs.**
 
 ## Getting Started - Single Node
 
@@ -26,7 +28,7 @@ docker-compose up
 
 ```
 docker pull failathon/docker-fusion
-docker run -d --name docker-fusion -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -p 8763:8763 -p 8780:8780 -p 8771:8771 failathon/docker-fusion
+docker run -d --name docker-fusion -p 8764:8764 -p 8983:8983 failathon/docker-fusion
 ```
 
 ### Usage -- Docker CLI / fresh build
@@ -37,7 +39,7 @@ docker run -d --name docker-fusion -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 876
 git clone https://github.com/ozskywalker/docker-fusion
 cd docker-fusion
 /bin/bash build.sh
-docker run -d --name docker-fusion -p 3000:3000 -p 3001:3001 -p 8764:8764 -p 8765:8765 -p 8983:8983 -p 8984:8984 -p 9983:9983 -p 8763:8763 -p 8780:8780 -p 8771:8771 docker-fusion:latest
+docker run -d --name docker-fusion -p 8764:8764 -p 8983:8983 docker-fusion:latest
 ```
 
 ### Usage -- watching logs
@@ -52,12 +54,7 @@ Service startup & View logs will be visible here.
 
 Once the image has loaded, fire up your web browser at:
 * Fusion UI - http://localhost:8764/
-* View - http://localhost:3000/search
-
-Other ports:
 * SOLR - http://localhost:8983/solr/
-* API - http://localhost:8765/api/
-* Connectors - http://localhost:8984/connectors/
 
 Sample Quickstart on fresh build:
 ![quickstart_screenshot](https://raw.githubusercontent.com/failathon/docker-fusion/master/quickstart.png)
@@ -68,7 +65,7 @@ Sample Quickstart on fresh build:
 * Zookeeper complains of address already in use - stop the node, and start it again.
 * Not sure if node has joined the zookeeper quorum?  Try querying it using:
 ```
-/opt/fusion/3.0.1/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -zkhost node1 -cmd get /zookeeper/config
+/opt/fusion/4.0.2/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -zkhost node1 -cmd get /zookeeper/config
 ```
 
 ## TODO
@@ -84,8 +81,8 @@ Sample Quickstart on fresh build:
 
 ## Version numbers
 
-* solr-spec 6.4.2
-* lucene-spec 6.4.2
-* OpenJDK 1.8.0
+* solr-spec 7.2.1
+* lucene-spec 7.2.1
+* OpenJDK 1.8.0_171
 * Fusion 4.0.2
-* Zookeeper 3.5.3
+* Zookeeper 3.5.4

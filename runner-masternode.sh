@@ -31,6 +31,19 @@ else
 EOF
 	echo $payload > /tmp/default.json
 
+	if [ \! -z "$ZOO_SERVERS" ]
+	then
+		echo Crafting zookeeper servers config
+		for server in `echo $ZOO_SERVERS | cut -d' '`; do
+			echo "$server" >> "/tmp/zookeeper/conf/zoo.cfg"
+		done
+		echo Final zoo.cfg
+		cat /tmp/zookeeper/conf/zoo.cfg
+	else
+		echo No ZOO_SERVERS specified, assuming single server only
+		echo "server.1=0.0.0.0:2888:3888:participant;2781" >> /tmp/zookeeper/conf/zoo.cfg
+	fi
+
 	echo starting first Zookeeper node
 	/usr/local/bin/zk-init.sh 1 &
 
@@ -51,7 +64,17 @@ EOF
 	echo Touching firstsetup_complete
 	touch /opt/firstsetup_complete
 
-	echo Starting services
+	if [ \! -z "$NODES" ]
+	then
+		echo Waiting for zookeeper instances to get their act together
+		i=1
+		while [ $i -lt $(($NODES+1)) ]; do
+			/opt/wait-for-it.sh node$i:$((2181+$i)) -- echo node$i:$((2181+$i)) zookeepeer is alive
+			i=$((i+1))
+		done
+	fi
+	
+	echo Assuming all zookeeper nodes are up, lets start services
 	cd /opt/fusion/4.0.2/
 	bin/fusion stop ; bin/fusion start
 	tail -f /dev/null
