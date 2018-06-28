@@ -18,8 +18,6 @@ docker-compose up
 
 ## Getting Started - Single Node
 
-* Internet access is required, both to download Fusion from the Lucidworks website, and to grab required packages from the Ubutnu servers.
-
 * Make sure you have minimum 4-6GB RAM for your docker machine or this will run slow.  Dataset size will also impact memory requirements.  Java & Big Data are always hungry, hungry hippos :)
 
 ### Usage -- from Docker Hub (pre-existing image)
